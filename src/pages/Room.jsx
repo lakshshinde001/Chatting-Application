@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import client,{databases, DATABASE_ID, COLLECTION_ID_MESSAGES} from '../appriteConfig.js'
 import { ID, Query } from 'appwrite'
+import Header from '../components/Header.jsx'
 import '../index.css'
 
 import {Trash2} from 'react-feather'
@@ -75,8 +76,9 @@ const Room = () => {
 
   return (
     <main className='container'>
+        <Header/>
         <div className='room--container'>
-
+            
             <form  onSubmit={handleSubmit} id='message--form'>
                 <div>
                     <textarea

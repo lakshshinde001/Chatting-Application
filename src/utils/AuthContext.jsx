@@ -10,27 +10,41 @@ export const AuthProvider = ({children}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setLoading(false);
+        getUserOnLoad();
     }, [])
 
+    const getUserOnLoad = async () => {
+        try {
+            const accountDetails = await account.get();
+            setUser(accountDetails);
+            // console.log("User Details : ", accountDetails);
+        } catch (error) {
+            console.error(error);
+        }
+        setLoading(false);
+    }
 
     const handleUserLogin = async (e, credentials) => {
         e.preventDefault();
         try {
             const response = await account.createEmailPasswordSession(credentials.email, credentials.password)
             console.log("Logged in ", response);
-            const accountDetails = account.get();
+            const accountDetails = await account.get();
             setUser(accountDetails)
             navigate('/');
         } catch (error) {
             console.error(error);
         }
     }
-
+    const handleUserLogout = async () => {
+        await account.deleteSession('current');
+        setUser(null);
+    }
     
     const contextData = {
         user,
-        handleUserLogin
+        handleUserLogin,
+        handleUserLogout
      }
 
     return <AuthContext.Provider value={contextData}>
