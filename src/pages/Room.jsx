@@ -73,7 +73,7 @@ const Room = () => {
         COLLECTION_ID_MESSAGES,
         [
             Query.orderDesc('$createdAt'),
-            Query.limit(5)
+            Query.limit(100)
         ]
     );
 
